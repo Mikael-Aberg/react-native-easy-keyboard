@@ -4,11 +4,17 @@ import Row from './row';
 
 export interface KeyConfig {
   value: string;
+  size: number;
 }
+
+type LayoutInput = Record<
+  string,
+  (string | (Partial<KeyConfig> & { value: string }))[][]
+>;
 
 export interface KeyboardConfig {
   marginPercent?: number;
-  layouts: Record<string, (string | KeyConfig)[][]>;
+  layouts: LayoutInput;
   triggerOptions?: {
     layout?: Record<string, string>;
     display?: Record<string, string>;
@@ -30,6 +36,12 @@ interface State {
   size: { height?: number; width?: number };
 }
 
+const DEFAULT_KEY: Omit<KeyConfig, 'value'> = Object.freeze({
+  size: 1,
+});
+
+const sizeRegex = new RegExp(/{(\d*\.*\d*)}$/, 'gm');
+
 class EasyKeyboard extends PureComponent<Props, State> {
   state: State = {
     layout: 'default',
@@ -50,13 +62,23 @@ class EasyKeyboard extends PureComponent<Props, State> {
     console.log('Key pressed: ', key);
   };
 
-  private createKeyConfigFromString = (value: string): KeyConfig => {
-    return { value };
+  private createKeyConfigFromString = (input: string): KeyConfig => {
+    const match = sizeRegex.exec(input);
+    let value = input;
+    let size = 1;
+    if (match?.[1]) {
+      size = parseFloat(match[1]);
+      value = value.replace(match[0], '');
+    }
+
+    return {
+      ...DEFAULT_KEY,
+      value,
+      size,
+    };
   };
 
-  private createLayoutConfigArray = (
-    layouts: Record<string, (string | KeyConfig)[][]>
-  ) => {
+  private createLayoutConfigArray = (layouts: LayoutInput) => {
     const l: Record<string, KeyConfig[][]> = {};
     Object.keys(layouts).forEach((key) => {
       l[key] = layouts[key].map((row) => {
@@ -64,7 +86,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
           if (typeof value === 'string') {
             list.push(this.createKeyConfigFromString(value));
           } else {
-            list.push(value);
+            list.push({ ...DEFAULT_KEY, ...value });
           }
           return list;
         }, [] as KeyConfig[]);
@@ -109,9 +131,14 @@ class EasyKeyboard extends PureComponent<Props, State> {
     };
   };
 
+  private getRowLength = (row: KeyConfig[]) => {
+    return row.reduce((a, v) => a + v.size, 0);
+  };
+
   private getLongestRow = (layouts: Record<string, KeyConfig[][]>) => {
     return layouts[this.state.layout].reduce((l, c) => {
-      return c.length > l ? c.length : l;
+      const size = this.getRowLength(c);
+      return size > l ? size : l;
     }, 0);
   };
 
