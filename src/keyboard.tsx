@@ -40,6 +40,8 @@ const DEFAULT_KEY: Omit<KeyConfig, 'value'> = Object.freeze({
   size: 1,
 });
 
+const sizeRegex = new RegExp(/{(\d*\.*\d*)}$/, 'gm');
+
 class EasyKeyboard extends PureComponent<Props, State> {
   state: State = {
     layout: 'default',
@@ -60,8 +62,20 @@ class EasyKeyboard extends PureComponent<Props, State> {
     console.log('Key pressed: ', key);
   };
 
-  private createKeyConfigFromString = (value: string): KeyConfig => {
-    return { value, ...DEFAULT_KEY };
+  private createKeyConfigFromString = (input: string): KeyConfig => {
+    const match = sizeRegex.exec(input);
+    let value = input;
+    let size = 1;
+    if (match?.[1]) {
+      size = parseFloat(match[1]);
+      value = value.replace(match[0], '');
+    }
+
+    return {
+      ...DEFAULT_KEY,
+      value,
+      size,
+    };
   };
 
   private createLayoutConfigArray = (layouts: LayoutInput) => {

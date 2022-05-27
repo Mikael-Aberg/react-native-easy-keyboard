@@ -6,9 +6,9 @@ const test: KeyboardConfig = {
   marginPercent: 5,
   layouts: {
     default: [
-      ['q', 'w', { value: 'e', size: 2 }, 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+      ['q', 'w{2}', { value: 'e', size: 2 }, 'r', 't', 'y', 'u', 'i', 'o', 'p'],
       ['a', 's', 'd', 'f', 'g', 'h', 'j', { value: 'k', size: 4 }, 'l'],
-      ['{caps}', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '{del}'],
+      ['{caps}{5}', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '{del}'],
     ],
     numeric: [
       ['7', '8', '9'],
