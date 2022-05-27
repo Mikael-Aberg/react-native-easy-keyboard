@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Cell from './cell';
+import type { KeyConfig } from './keyboard';
 
 interface Props {
-  row: string[];
+  row: KeyConfig[];
   onKeyPress: (key: string) => void;
   onTriggerPress: (trigger: string) => void;
   triggers?: Record<string, string>;
@@ -18,11 +19,10 @@ const Row = (props: Props) => {
       {props.row.map((cell) => (
         <Cell
           size={props.cellSize}
-          onPress={
-            props.triggers?.[cell] ? props.onTriggerPress : props.onKeyPress
-          }
-          value={cell}
-          key={cell}
+          onPress={props.onKeyPress}
+          value={cell.value}
+          // TODO - Better key value
+          key={cell.value}
           margin={props.cellMargin}
           fontSize={props.cellFontSize}
         />
