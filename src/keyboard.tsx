@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { LayoutChangeEvent, PixelRatio, View } from 'react-native';
+import { LayoutChangeEvent, View } from 'react-native';
 import Row from './row';
 
 export interface KeyboardConfig {
@@ -11,15 +11,19 @@ export interface KeyboardConfig {
   };
 }
 
+interface CellSizes {
+  cellSize?: number;
+  cellMargin?: number;
+  cellFontSize?: number;
+}
+
 interface Props {
   config: KeyboardConfig;
 }
 
-interface State {
+interface State extends CellSizes {
   layout: string;
   size: { height?: number; width?: number };
-  cellSize?: number;
-  cellMargin?: number;
 }
 
 class EasyKeyboard extends PureComponent<Props, State> {
@@ -28,6 +32,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
     size: { height: undefined, width: undefined },
     cellSize: undefined,
     cellMargin: undefined,
+    cellFontSize: undefined,
   };
 
   setLayout = (layout: string) => {
@@ -50,7 +55,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
   private calculateCellSize = (
     layout: string,
     { width, height }: { width?: number; height?: number }
-  ) => {
+  ): CellSizes => {
     if (!width || !height) {
       return { cellSize: undefined, cellMargin: undefined };
     }
@@ -67,18 +72,34 @@ class EasyKeyboard extends PureComponent<Props, State> {
 
     const maxWidth = width / longest - marginWidth / longest;
 
+    const cellSize = maxHeight > maxWidth ? maxWidth : maxHeight;
+    const cellMargin =
+      maxHeight > maxWidth
+        ? marginWidth / longest
+        : marginHeight / this.props.config.layouts[layout].length;
+
+    const cellFontSize = (cellSize * 1.8) / this.getLongestWord(layout);
+
     return {
-      cellSize: maxHeight > maxWidth ? maxWidth : maxHeight,
-      cellMargin:
-        maxHeight > maxWidth
-          ? marginWidth / longest
-          : marginHeight / this.props.config.layouts[layout].length,
+      cellSize,
+      cellMargin,
+      cellFontSize,
     };
   };
 
   private getLongestRow = (layout: string) => {
     return this.props.config.layouts[layout].reduce((l, c) => {
       return c.length > l ? c.length : l;
+    }, 0);
+  };
+
+  private getLongestWord = (layout: string) => {
+    return this.props.config.layouts[layout].reduce((longest, current) => {
+      const longestWord = current.reduce(
+        (l, c) => (l < c.length ? c.length : l),
+        0
+      );
+      return longestWord < longest ? longest : longestWord;
     }, 0);
   };
 
@@ -101,6 +122,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
             key={i}
             cellMargin={this.state.cellMargin}
             cellSize={this.state.cellSize}
+            cellFontSize={this.state.cellFontSize}
             onKeyPress={this.onKeyPress}
             onTriggerPress={this.onTriggerPress}
           />

@@ -7,6 +7,7 @@ interface Props {
   display?: string;
   size?: number;
   margin?: number;
+  fontSize?: number;
 }
 
 const Cell = (props: Props) => {
@@ -27,7 +28,9 @@ const Cell = (props: Props) => {
       ]}
       onPress={onPress}
     >
-      <Text style={styles.text}>{props.display || props.value}</Text>
+      <Text style={[styles.text, { fontSize: props.fontSize }]}>
+        {props.display || props.value}
+      </Text>
     </TouchableOpacity>
   );
 };

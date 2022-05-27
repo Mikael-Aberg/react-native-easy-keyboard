@@ -9,6 +9,7 @@ interface Props {
   triggers?: Record<string, string>;
   cellSize?: number;
   cellMargin?: number;
+  cellFontSize?: number;
 }
 
 const Row = (props: Props) => {
@@ -23,6 +24,7 @@ const Row = (props: Props) => {
           value={cell}
           key={cell}
           margin={props.cellMargin}
+          fontSize={props.cellFontSize}
         />
       ))}
     </View>
