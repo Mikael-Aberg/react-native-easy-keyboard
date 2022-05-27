@@ -18,9 +18,9 @@ const Row = (props: Props) => {
     <View style={[styles.row]}>
       {props.row.map((cell) => (
         <Cell
-          size={props.cellSize}
+          config={cell}
+          baseSize={props.cellSize}
           onPress={props.onKeyPress}
-          value={cell.value}
           // TODO - Better key value
           key={cell.value}
           margin={props.cellMargin}

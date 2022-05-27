@@ -4,11 +4,17 @@ import Row from './row';
 
 export interface KeyConfig {
   value: string;
+  size: number;
 }
+
+type LayoutInput = Record<
+  string,
+  (string | (Partial<KeyConfig> & { value: string }))[][]
+>;
 
 export interface KeyboardConfig {
   marginPercent?: number;
-  layouts: Record<string, (string | KeyConfig)[][]>;
+  layouts: LayoutInput;
   triggerOptions?: {
     layout?: Record<string, string>;
     display?: Record<string, string>;
@@ -29,6 +35,10 @@ interface State {
   layout: string;
   size: { height?: number; width?: number };
 }
+
+const DEFAULT_KEY: Omit<KeyConfig, 'value'> = Object.freeze({
+  size: 1,
+});
 
 class EasyKeyboard extends PureComponent<Props, State> {
   state: State = {
@@ -51,12 +61,10 @@ class EasyKeyboard extends PureComponent<Props, State> {
   };
 
   private createKeyConfigFromString = (value: string): KeyConfig => {
-    return { value };
+    return { value, ...DEFAULT_KEY };
   };
 
-  private createLayoutConfigArray = (
-    layouts: Record<string, (string | KeyConfig)[][]>
-  ) => {
+  private createLayoutConfigArray = (layouts: LayoutInput) => {
     const l: Record<string, KeyConfig[][]> = {};
     Object.keys(layouts).forEach((key) => {
       l[key] = layouts[key].map((row) => {
@@ -64,7 +72,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
           if (typeof value === 'string') {
             list.push(this.createKeyConfigFromString(value));
           } else {
-            list.push(value);
+            list.push({ ...DEFAULT_KEY, ...value });
           }
           return list;
         }, [] as KeyConfig[]);
@@ -109,9 +117,14 @@ class EasyKeyboard extends PureComponent<Props, State> {
     };
   };
 
+  private getRowLength = (row: KeyConfig[]) => {
+    return row.reduce((a, v) => a + v.size, 0);
+  };
+
   private getLongestRow = (layouts: Record<string, KeyConfig[][]>) => {
     return layouts[this.state.layout].reduce((l, c) => {
-      return c.length > l ? c.length : l;
+      const size = this.getRowLength(c);
+      return size > l ? size : l;
     }, 0);
   };
 
