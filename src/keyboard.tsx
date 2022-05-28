@@ -5,6 +5,7 @@ import Row from './row';
 export interface KeyConfig {
   value: string;
   size: number;
+  display?: string;
 }
 
 type LayoutInput = Record<
@@ -15,10 +16,6 @@ type LayoutInput = Record<
 export interface KeyboardConfig {
   marginPercent?: number;
   layouts: LayoutInput;
-  triggerOptions?: {
-    layout?: Record<string, string>;
-    display?: Record<string, string>;
-  };
 }
 
 interface CellSizes {
@@ -144,10 +141,10 @@ class EasyKeyboard extends PureComponent<Props, State> {
 
   private getLongestWord = (layouts: Record<string, KeyConfig[][]>) => {
     return layouts[this.state.layout].reduce((longest, current) => {
-      const longestWord = current.reduce(
-        (l, c) => (l < c.value.length ? c.value.length : l),
-        0
-      );
+      const longestWord = current.reduce((l, c) => {
+        const val = c.display?.length || c.value.length;
+        return l < val ? val : l;
+      }, 0);
       return longestWord < longest ? longest : longestWord;
     }, 0);
   };

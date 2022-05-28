@@ -37,7 +37,7 @@ const Cell = (props: Props) => {
       onPress={onPress}
     >
       <Text style={[styles.text, { fontSize: props.fontSize }]}>
-        {props.config.value}
+        {props.config.display || props.config.value}
       </Text>
     </TouchableOpacity>
   );
