@@ -16,13 +16,13 @@ interface Props {
 const Row = (props: Props) => {
   return (
     <View style={[styles.row]}>
-      {props.row.map((cell) => (
+      {props.row.map((cell, i) => (
         <Cell
           config={cell}
           baseSize={props.cellSize}
           onPress={props.onKeyPress}
           // TODO - Better key value
-          key={cell.value}
+          key={cell.value + i}
           margin={props.cellMargin}
           fontSize={props.cellFontSize}
         />
