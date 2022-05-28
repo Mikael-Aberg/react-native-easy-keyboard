@@ -52,7 +52,7 @@
     "@release-it/conventional-changelog": "5.0.0",
     "@types/react": "16.14.26",
     "commitlint": "11.0.0",
-    "eslint-config-prettier": "7.2.0",
+    "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "3.4.1",
     "husky": "6.0.0",
     "pod-install": "0.1.36",
