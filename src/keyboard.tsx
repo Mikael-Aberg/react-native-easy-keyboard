@@ -5,6 +5,7 @@ import Row from './row';
 export interface KeyConfig {
   value: string;
   size: number;
+  display?: string;
 }
 
 type LayoutInput = Record<
@@ -12,13 +13,14 @@ type LayoutInput = Record<
   (string | (Partial<KeyConfig> & { value: string }))[][]
 >;
 
-export interface KeyboardConfig {
+interface DisplayOptions {
   marginPercent?: number;
+  display?: Record<string, string>;
+}
+
+export interface KeyboardConfig {
   layouts: LayoutInput;
-  triggerOptions?: {
-    layout?: Record<string, string>;
-    display?: Record<string, string>;
-  };
+  displayOptions?: DisplayOptions;
 }
 
 interface CellSizes {
@@ -75,6 +77,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
       ...DEFAULT_KEY,
       value,
       size,
+      display: this.getDisplayNameFromConfig(value),
     };
   };
 
@@ -86,7 +89,12 @@ class EasyKeyboard extends PureComponent<Props, State> {
           if (typeof value === 'string') {
             list.push(this.createKeyConfigFromString(value));
           } else {
-            list.push({ ...DEFAULT_KEY, ...value });
+            list.push({
+              ...DEFAULT_KEY,
+              ...value,
+              display:
+                value.display || this.getDisplayNameFromConfig(value.value),
+            });
           }
           return list;
         }, [] as KeyConfig[]);
@@ -105,7 +113,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
     }
 
     const longest = this.getLongestRow(layouts);
-    const margin = (this.props.config.marginPercent ?? 1) / 100;
+    const margin = (this.props.config.displayOptions?.marginPercent ?? 1) / 100;
 
     const marginWidth = Math.max(margin * width, 0);
     const marginHeight = Math.max(margin * height, 0);
@@ -142,12 +150,22 @@ class EasyKeyboard extends PureComponent<Props, State> {
     }, 0);
   };
 
+  private getDisplayNameFromConfig = (name: string) => {
+    return this.props.config.displayOptions?.display?.[name];
+  };
+
   private getLongestWord = (layouts: Record<string, KeyConfig[][]>) => {
     return layouts[this.state.layout].reduce((longest, current) => {
-      const longestWord = current.reduce(
-        (l, c) => (l < c.value.length ? c.value.length : l),
-        0
-      );
+      const longestWord = current.reduce((l, c) => {
+        // Local display value overrides global option
+        if (c.display) {
+          return l < c.display.length ? c.display.length : l;
+        }
+
+        const val =
+          this.getDisplayNameFromConfig(c.value)?.length || c.value.length;
+        return l < val ? val : l;
+      }, 0);
       return longestWord < longest ? longest : longestWord;
     }, 0);
   };
