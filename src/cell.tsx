@@ -30,6 +30,7 @@ const Cell = (props: Props) => {
         {
           height: props.baseSize,
           width,
+          minWidth: width,
           marginVertical: margin,
           marginHorizontal: margin,
         },
