@@ -6,7 +6,6 @@ import type {KeyConfig} from './keyboard';
 interface Props {
   row: KeyConfig[];
   onKeyPress: (key: string) => void;
-  onTriggerPress: (trigger: string) => void;
   triggers?: Record<string, string>;
   cellSize?: number;
   cellMargin?: number;
