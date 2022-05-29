@@ -37,6 +37,7 @@ interface CellSizes {
 
 interface Props {
   config: KeyboardConfig;
+  onKeyPress: (key: string) => void;
 }
 
 interface State {
@@ -66,10 +67,6 @@ class EasyKeyboard extends PureComponent<Props, State> {
 
   private onTriggerPress = (trigger: string) => {
     console.log('Trigger pressed: ', trigger);
-  };
-
-  private onKeyPress = (key: string) => {
-    console.log('Key pressed: ', key);
   };
 
   private createKeyConfigFromString = (input: string): KeyConfig => {
@@ -229,7 +226,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
               cellMargin={sizes.cellMargin}
               cellSize={sizes.cellSize}
               cellFontSize={sizes.cellFontSize}
-              onKeyPress={this.onKeyPress}
+              onKeyPress={this.props.onKeyPress}
               onTriggerPress={this.onTriggerPress}
             />
           ))}
