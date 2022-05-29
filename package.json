@@ -47,11 +47,11 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "13.2.0",
+    "@commitlint/config-conventional": "14.1.0",
     "@react-native-community/eslint-config": "2.0.0",
     "@release-it/conventional-changelog": "5.0.0",
     "@types/react": "17.0.45",
-    "commitlint": "13.2.1",
+    "commitlint": "14.1.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.0.0",
     "husky": "6.0.0",
