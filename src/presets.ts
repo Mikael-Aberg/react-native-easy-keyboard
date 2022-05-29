@@ -1,4 +1,4 @@
-import type { KeyboardConfig } from './keyboard';
+import type {KeyboardConfig} from './keyboard';
 
 export const numeric: KeyboardConfig = {
   layouts: {

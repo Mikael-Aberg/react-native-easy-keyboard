@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import type { KeyConfig } from './keyboard';
+import React, {useCallback} from 'react';
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import type {KeyConfig} from './keyboard';
 
 interface Props {
   onPress: (value: string) => void;
@@ -10,17 +10,16 @@ interface Props {
   fontSize?: number;
 }
 
-const Cell = (props: Props) => {
-  const onPress = useCallback(() => {
-    props.onPress(props.config.value);
-  }, [props.onPress, props.config.value]);
+const Cell = ({onPress, config, ...props}: Props) => {
+  const handleCellPress = useCallback(() => {
+    onPress(config.value);
+  }, [onPress, config.value]);
 
   const margin = props.margin !== undefined ? props.margin / 2 : 0;
 
   const width =
     props.baseSize !== undefined
-      ? props.baseSize * props.config.size +
-        margin * 2 * (props.config.size - 1)
+      ? props.baseSize * config.size + margin * 2 * (config.size - 1)
       : undefined;
 
   return (
@@ -35,10 +34,9 @@ const Cell = (props: Props) => {
           marginHorizontal: margin,
         },
       ]}
-      onPress={onPress}
-    >
-      <Text style={[styles.text, { fontSize: props.fontSize }]}>
-        {props.config.display || props.config.value}
+      onPress={handleCellPress}>
+      <Text style={[styles.text, {fontSize: props.fontSize}]}>
+        {config.display || config.value}
       </Text>
     </TouchableOpacity>
   );

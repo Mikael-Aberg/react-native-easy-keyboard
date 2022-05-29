@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Cell from './cell';
-import type { KeyConfig } from './keyboard';
+import type {KeyConfig} from './keyboard';
 
 interface Props {
   row: KeyConfig[];

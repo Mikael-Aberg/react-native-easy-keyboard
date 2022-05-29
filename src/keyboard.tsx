@@ -1,5 +1,11 @@
-import React, { PureComponent } from 'react';
-import { Dimensions, LayoutChangeEvent, Text, View } from 'react-native';
+import React, {PureComponent} from 'react';
+import {
+  Dimensions,
+  LayoutChangeEvent,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Row from './row';
 
 export interface KeyConfig {
@@ -10,7 +16,7 @@ export interface KeyConfig {
 
 type LayoutInput = Record<
   string,
-  (string | (Partial<KeyConfig> & { value: string }))[][]
+  (string | (Partial<KeyConfig> & {value: string}))[][]
 >;
 
 interface DisplayOptions {
@@ -35,8 +41,8 @@ interface Props {
 
 interface State {
   layout: string;
-  size: { height?: number; width?: number };
-  fontMeasure: { height: number; width: number };
+  size: {height?: number; width?: number};
+  fontMeasure: {height: number; width: number};
 }
 
 const DEFAULT_KEY: Omit<KeyConfig, 'value'> = Object.freeze({
@@ -48,13 +54,13 @@ const sizeRegex = new RegExp(/{(\d*\.*\d*)}$/, 'gm');
 class EasyKeyboard extends PureComponent<Props, State> {
   state: State = {
     layout: 'default',
-    size: { height: undefined, width: undefined },
-    fontMeasure: { height: 1, width: 1 },
+    size: {height: undefined, width: undefined},
+    fontMeasure: {height: 1, width: 1},
   };
 
   setLayout = (layout: string) => {
     if (this.props.config.layouts[layout]) {
-      this.setState({ layout });
+      this.setState({layout});
     }
   };
 
@@ -85,8 +91,8 @@ class EasyKeyboard extends PureComponent<Props, State> {
 
   private createLayoutConfigArray = (layouts: LayoutInput) => {
     const l: Record<string, KeyConfig[][]> = {};
-    Object.keys(layouts).forEach((key) => {
-      l[key] = layouts[key].map((row) => {
+    Object.keys(layouts).forEach(key => {
+      l[key] = layouts[key].map(row => {
         return row.reduce((list, value) => {
           if (typeof value === 'string') {
             list.push(this.createKeyConfigFromString(value));
@@ -108,10 +114,10 @@ class EasyKeyboard extends PureComponent<Props, State> {
 
   private calculateCellSize = (
     layouts: Record<string, KeyConfig[][]>,
-    { width, height }: { width?: number; height?: number }
+    {width, height}: {width?: number; height?: number}
   ): CellSizes => {
     if (!width || !height) {
-      return { cellSize: undefined, cellMargin: undefined };
+      return {cellSize: undefined, cellMargin: undefined};
     }
 
     const longest = this.getLongestRow(layouts);
@@ -185,7 +191,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
     }, 0);
   };
 
-  private onLayout = ({ nativeEvent }: LayoutChangeEvent) => {
+  private onLayout = ({nativeEvent}: LayoutChangeEvent) => {
     this.setState({
       size: {
         height: nativeEvent.layout.height,
@@ -194,7 +200,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
     });
   };
 
-  private onFontMeasureLayout = ({ nativeEvent }: LayoutChangeEvent) => {
+  private onFontMeasureLayout = ({nativeEvent}: LayoutChangeEvent) => {
     this.setState({
       fontMeasure: {
         height: nativeEvent.layout.height,
@@ -211,19 +217,11 @@ class EasyKeyboard extends PureComponent<Props, State> {
       <>
         <Text
           selectable={false}
-          style={{
-            fontSize: 100,
-            position: 'absolute',
-            opacity: 0,
-            alignSelf: 'flex-start',
-            left: -Dimensions.get('screen').width,
-          }}
-          onLayout={this.onFontMeasureLayout}
-        >
+          style={styles.measure}
+          onLayout={this.onFontMeasureLayout}>
           W
         </Text>
-
-        <View style={{ flex: 1 }} onLayout={this.onLayout}>
+        <View style={styles.container} onLayout={this.onLayout}>
           {layouts[this.state.layout].map((row, i) => (
             <Row
               row={row}
@@ -240,5 +238,16 @@ class EasyKeyboard extends PureComponent<Props, State> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {flex: 1},
+  measure: {
+    fontSize: 100,
+    position: 'absolute',
+    opacity: 0,
+    alignSelf: 'flex-start',
+    left: -Dimensions.get('screen').width,
+  },
+});
 
 export default EasyKeyboard;

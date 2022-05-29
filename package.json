@@ -8,12 +8,7 @@
   "react-native": "src/index",
   "source": "src/index",
   "files": [
-    "src",
     "lib",
-    "android",
-    "ios",
-    "cpp",
-    "react-native-easy-keyboard.podspec",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",
@@ -24,12 +19,13 @@
   "scripts": {
     "test": "jest",
     "typescript": "tsc --noEmit",
-    "lint": "eslint \"**/*.{js,ts,tsx,jsx}\"",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
     "prepare": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
-    "bootstrap": "yarn example && yarn && yarn pods"
+    "bootstrap": "yarn example && yarn && yarn pods",
+    "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}"
   },
   "keywords": [
     "react-native",
@@ -47,15 +43,12 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "14.1.0",
-    "@react-native-community/eslint-config": "3.0.2",
     "@commitlint/config-conventional": "17.0.0",
     "@react-native-community/eslint-config": "3.0.2",
     "@release-it/conventional-changelog": "5.0.0",
     "@types/react": "17.0.45",
     "commitlint": "17.0.1",
     "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-prettier": "4.0.0",
     "husky": "8.0.1",
     "pod-install": "0.1.36",
     "prettier": "2.6.2",
@@ -124,7 +117,11 @@
           "singleQuote": true,
           "tabWidth": 2,
           "trailingComma": "es5",
-          "useTabs": false
+          "useTabs": false,
+          "bracketSpacing": false,
+          "bracketSameLine": true,
+          "arrowParens": "avoid",
+          "endOfLine": "auto"
         }
       ]
     }
@@ -138,7 +135,11 @@
     "singleQuote": true,
     "tabWidth": 2,
     "trailingComma": "es5",
-    "useTabs": false
+    "useTabs": false,
+    "bracketSpacing": false,
+    "bracketSameLine": true,
+    "arrowParens": "avoid",
+    "endOfLine": "auto"
   },
   "react-native-builder-bob": {
     "source": "src",
