@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { LayoutChangeEvent, View } from 'react-native';
+import { Dimensions, LayoutChangeEvent, Text, View } from 'react-native';
 import Row from './row';
 
 export interface KeyConfig {
@@ -36,6 +36,7 @@ interface Props {
 interface State {
   layout: string;
   size: { height?: number; width?: number };
+  fontMeasure: { height: number; width: number };
 }
 
 const DEFAULT_KEY: Omit<KeyConfig, 'value'> = Object.freeze({
@@ -48,6 +49,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
   state: State = {
     layout: 'default',
     size: { height: undefined, width: undefined },
+    fontMeasure: { height: 1, width: 1 },
   };
 
   setLayout = (layout: string) => {
@@ -130,7 +132,10 @@ class EasyKeyboard extends PureComponent<Props, State> {
         ? marginWidth / longest
         : marginHeight / layouts[this.state.layout].length;
 
-    const cellFontSize = (cellSize * 1.8) / this.getLongestWord(layouts);
+    const cellFontSize = this.calculateFontSize(
+      cellSize,
+      this.getLongestWord(layouts)
+    );
 
     return {
       cellSize,
@@ -138,6 +143,16 @@ class EasyKeyboard extends PureComponent<Props, State> {
       cellFontSize,
     };
   };
+
+  private calculateFontSize(cellSize: number, longestWord: number) {
+    if (longestWord === 1) {
+      return cellSize / ((this.state.fontMeasure.height / 100) * longestWord);
+    }
+
+    return (
+      cellSize / ((this.state.fontMeasure.width / 100 / 1.35) * longestWord)
+    );
+  }
 
   private getRowLength = (row: KeyConfig[]) => {
     return row.reduce((a, v) => a + v.size, 0);
@@ -179,24 +194,49 @@ class EasyKeyboard extends PureComponent<Props, State> {
     });
   };
 
+  private onFontMeasureLayout = ({ nativeEvent }: LayoutChangeEvent) => {
+    this.setState({
+      fontMeasure: {
+        height: nativeEvent.layout.height,
+        width: nativeEvent.layout.width,
+      },
+    });
+  };
+
   render() {
     const layouts = this.createLayoutConfigArray(this.props.config.layouts);
     const sizes = this.calculateCellSize(layouts, this.state.size);
 
     return (
-      <View style={{ flex: 1 }} onLayout={this.onLayout}>
-        {layouts[this.state.layout].map((row, i) => (
-          <Row
-            row={row}
-            key={i}
-            cellMargin={sizes.cellMargin}
-            cellSize={sizes.cellSize}
-            cellFontSize={sizes.cellFontSize}
-            onKeyPress={this.onKeyPress}
-            onTriggerPress={this.onTriggerPress}
-          />
-        ))}
-      </View>
+      <>
+        <Text
+          selectable={false}
+          style={{
+            fontSize: 100,
+            position: 'absolute',
+            opacity: 0,
+            alignSelf: 'flex-start',
+            left: -Dimensions.get('screen').width,
+          }}
+          onLayout={this.onFontMeasureLayout}
+        >
+          W
+        </Text>
+
+        <View style={{ flex: 1 }} onLayout={this.onLayout}>
+          {layouts[this.state.layout].map((row, i) => (
+            <Row
+              row={row}
+              key={i}
+              cellMargin={sizes.cellMargin}
+              cellSize={sizes.cellSize}
+              cellFontSize={sizes.cellFontSize}
+              onKeyPress={this.onKeyPress}
+              onTriggerPress={this.onTriggerPress}
+            />
+          ))}
+        </View>
+      </>
     );
   }
 }

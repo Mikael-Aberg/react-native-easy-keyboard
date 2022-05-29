@@ -51,7 +51,10 @@ const styles = StyleSheet.create({
     flex: 0,
     justifyContent: 'center',
   },
-  text: { color: '#000', textAlign: 'center' },
+  text: {
+    color: '#000',
+    textAlign: 'center',
+  },
 });
 
 export default Cell;
