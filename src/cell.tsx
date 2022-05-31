@@ -33,9 +33,10 @@ const Cell = ({onPress, config, ...props}: Props) => {
           marginVertical: margin,
           marginHorizontal: margin,
         },
+        config.keyStyle,
       ]}
       onPress={handleCellPress}>
-      <Text style={[styles.text, {fontSize: props.fontSize}]}>
+      <Text style={[styles.text, {fontSize: props.fontSize}, config.textStyle]}>
         {config.display || config.value}
       </Text>
     </TouchableOpacity>

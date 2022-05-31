@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import Cell from './cell';
 import type {KeyConfig} from './keyboard';
 
@@ -10,11 +10,12 @@ interface Props {
   cellSize?: number;
   cellMargin?: number;
   cellFontSize?: number;
+  style?: StyleProp<ViewStyle>;
 }
 
 const Row = (props: Props) => {
   return (
-    <View style={[styles.row]}>
+    <View style={[styles.row, props.style]}>
       {props.row.map((cell, i) => (
         <Cell
           config={cell}

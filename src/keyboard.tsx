@@ -2,9 +2,12 @@ import React, {PureComponent} from 'react';
 import {
   Dimensions,
   LayoutChangeEvent,
+  StyleProp,
   StyleSheet,
   Text,
+  TextStyle,
   View,
+  ViewStyle,
 } from 'react-native';
 import Row from './row';
 import * as utils from './utils';
@@ -13,6 +16,8 @@ export interface KeyConfig {
   value: string;
   size: number;
   display?: string;
+  keyStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
 }
 
 export type LayoutInput = Record<
@@ -20,9 +25,17 @@ export type LayoutInput = Record<
   (string | (Partial<KeyConfig> & {value: string}))[][]
 >;
 
+interface KeyboardTheme {
+  keyStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  rowStyle?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
+}
+
 interface DisplayOptions {
   marginPercent?: number;
   display?: Record<string, string>;
+  theme?: KeyboardTheme;
 }
 
 export interface KeyboardConfig {
@@ -89,11 +102,17 @@ class EasyKeyboard extends PureComponent<Props, State> {
           onLayout={this.onFontMeasureLayout}>
           W
         </Text>
-        <View style={styles.container} onLayout={this.onLayout}>
+        <View
+          style={[
+            styles.container,
+            this.props.config.displayOptions?.theme?.containerStyle,
+          ]}
+          onLayout={this.onLayout}>
           {layouts[this.state.layout].map((row, i) => (
             <Row
               row={row}
               key={i}
+              style={this.props.config.displayOptions?.theme?.rowStyle}
               cellMargin={sizes.cellMargin}
               cellSize={sizes.cellSize}
               cellFontSize={sizes.cellFontSize}
