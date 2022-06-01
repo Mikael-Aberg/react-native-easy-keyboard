@@ -25,7 +25,7 @@ export type LayoutInput = Record<
   (string | (Partial<KeyConfig> & {value: string}))[][]
 >;
 
-interface KeyboardTheme {
+export interface KeyboardTheme {
   keyStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   rowStyle?: StyleProp<ViewStyle>;
@@ -35,7 +35,6 @@ interface KeyboardTheme {
 interface DisplayOptions {
   marginPercent?: number;
   display?: Record<string, string>;
-  theme?: KeyboardTheme;
 }
 
 export interface KeyboardConfig {
@@ -45,6 +44,7 @@ export interface KeyboardConfig {
 
 interface Props {
   config: KeyboardConfig;
+  theme?: KeyboardTheme;
   onKeyPress: (key: string) => void;
 }
 
@@ -103,16 +103,13 @@ class EasyKeyboard extends PureComponent<Props, State> {
           W
         </Text>
         <View
-          style={[
-            styles.container,
-            this.props.config.displayOptions?.theme?.containerStyle,
-          ]}
+          style={[styles.container, this.props?.theme?.containerStyle]}
           onLayout={this.onLayout}>
           {layouts[this.state.layout].map((row, i) => (
             <Row
               row={row}
               key={i}
-              style={this.props.config.displayOptions?.theme?.rowStyle}
+              style={this.props?.theme?.rowStyle}
               cellMargin={sizes.cellMargin}
               cellSize={sizes.cellSize}
               cellFontSize={sizes.cellFontSize}

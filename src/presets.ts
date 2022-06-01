@@ -1,6 +1,6 @@
 import type {KeyboardConfig} from './keyboard';
 
-export const numeric: KeyboardConfig = {
+export const PRESET_NUMERIC: KeyboardConfig = {
   layouts: {
     default: [
       ['7', '8', '9'],
@@ -11,7 +11,7 @@ export const numeric: KeyboardConfig = {
   },
 };
 
-export const english: KeyboardConfig = {
+export const PRESET_ENGLISH: KeyboardConfig = {
   displayOptions: {
     marginPercent: 5,
     display: {

@@ -1,6 +1,4 @@
 import EasyKeyboard from './keyboard';
-import * as presets from './presets';
-
-export {presets};
+export * from './presets';
 export type {KeyboardConfig} from './keyboard';
 export default EasyKeyboard;
