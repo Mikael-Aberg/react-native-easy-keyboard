@@ -1,5 +1,12 @@
 import React, {useCallback} from 'react';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 import type {KeyConfig} from './keyboard';
 
 interface Props {
@@ -8,6 +15,8 @@ interface Props {
   baseSize?: number;
   margin?: number;
   fontSize?: number;
+  keyStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
 }
 
 const Cell = ({onPress, config, ...props}: Props) => {
@@ -33,10 +42,17 @@ const Cell = ({onPress, config, ...props}: Props) => {
           marginVertical: margin,
           marginHorizontal: margin,
         },
+        props.keyStyle,
         config.keyStyle,
       ]}
       onPress={handleCellPress}>
-      <Text style={[styles.text, {fontSize: props.fontSize}, config.textStyle]}>
+      <Text
+        style={[
+          styles.text,
+          {fontSize: props.fontSize},
+          props.textStyle,
+          config.textStyle,
+        ]}>
         {config.display || config.value}
       </Text>
     </TouchableOpacity>

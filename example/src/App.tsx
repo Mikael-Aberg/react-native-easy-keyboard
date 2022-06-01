@@ -1,44 +1,35 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import EasyKeyboard, {
-  KeyboardConfig,
-  PRESET_ENGLISH,
-} from 'react-native-easy-keyboard';
+import EasyKeyboard, {KeyboardConfig} from 'react-native-easy-keyboard';
 import type {KeyboardTheme} from 'src/keyboard';
 
 const myLayout: KeyboardConfig = {
   displayOptions: {
     marginPercent: 5,
+    display: {
+      '{shift}': '\u21E7',
+      '{numeric}': '123',
+      '{return}': 'return',
+      '{del}': '\u21E6',
+    },
   },
   layouts: {
     default: [
-      [
-        '1',
-        '2',
-        '3',
-        {
-          value: '{del}',
-          display: '< Delete',
-          size: 2,
-          keyStyle: {
-            backgroundColor: 'red',
-            borderRadius: 5,
-          },
-          textStyle: {
-            color: 'white',
-            fontWeight: 'bold',
-          },
-        },
-      ],
+      ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+      ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+      ['{shift}{1.5}', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '{del}{1.5}'],
+      ['{numeric}{2.5}', ' {5}', '{return}{2.5}'],
     ],
   },
 };
 
 const myTheme: KeyboardTheme = {
-  containerStyle: {marginTop: 20},
-  rowStyle: {backgroundColor: 'blue'},
-  keyStyle: {borderRadius: 5, backgroundColor: 'green'},
-  textStyle: {color: 'white', fontWeight: 'bold'},
+  containerStyle: {
+    alignItems: 'center',
+  },
+  rowStyle: {},
+  keyStyle: {},
+  textStyle: {},
 };
 
 export default function App() {
@@ -48,11 +39,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <EasyKeyboard
-        onKeyPress={onKeyPress}
-        config={PRESET_ENGLISH}
-        theme={myTheme}
-      />
+      <EasyKeyboard onKeyPress={onKeyPress} config={myLayout} theme={myTheme} />
     </SafeAreaView>
   );
 }

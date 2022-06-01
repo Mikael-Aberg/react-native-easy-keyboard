@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Cell from './cell';
-import type {KeyConfig} from './keyboard';
+import type {KeyboardTheme, KeyConfig} from './keyboard';
 
 interface Props {
   row: KeyConfig[];
@@ -10,19 +10,20 @@ interface Props {
   cellSize?: number;
   cellMargin?: number;
   cellFontSize?: number;
-  style?: StyleProp<ViewStyle>;
+  theme?: KeyboardTheme;
 }
 
 const Row = (props: Props) => {
   return (
-    <View style={[styles.row, props.style]}>
+    <View style={[styles.row, props.theme?.rowStyle]}>
       {props.row.map((cell, i) => (
         <Cell
           config={cell}
           baseSize={props.cellSize}
           onPress={props.onKeyPress}
-          // TODO - Better key value
           key={cell.value + i}
+          keyStyle={props.theme?.keyStyle}
+          textStyle={props.theme?.textStyle}
           margin={props.cellMargin}
           fontSize={props.cellFontSize}
         />

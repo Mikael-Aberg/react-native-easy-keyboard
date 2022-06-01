@@ -109,7 +109,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
             <Row
               row={row}
               key={i}
-              style={this.props?.theme?.rowStyle}
+              theme={this.props?.theme}
               cellMargin={sizes.cellMargin}
               cellSize={sizes.cellSize}
               cellFontSize={sizes.cellFontSize}
