@@ -21,8 +21,6 @@ export const createKeyConfigFromString = (
 
   return {
     ...constants.DEFAULT_KEY_CONFIG,
-    keyStyle: config.displayOptions?.theme?.keyStyle,
-    textStyle: config.displayOptions?.theme?.textStyle,
     value,
     size,
     display: getDisplayNameFromConfig(config, value),
@@ -76,10 +74,6 @@ export const createLayoutConfigArray = (config: KeyboardConfig) => {
         } else {
           list.push({
             ...constants.DEFAULT_KEY_CONFIG,
-            keyStyle: config.displayOptions?.theme?.keyStyle,
-            textStyle: config.displayOptions?.theme?.textStyle,
-            // Local styles override global theme
-            // Option to keep global style also?
             ...value,
             display:
               value.display || getDisplayNameFromConfig(config, value.value),
@@ -89,7 +83,6 @@ export const createLayoutConfigArray = (config: KeyboardConfig) => {
       }, [] as KeyConfig[]);
     });
   });
-
   return l;
 };
 
