@@ -15,6 +15,7 @@ import * as utils from './utils';
 export interface KeyConfig {
   value: string;
   size: number;
+  isTrigger?: boolean;
   display?: string;
   keyStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -45,7 +46,8 @@ export interface KeyboardConfig {
 interface Props {
   config: KeyboardConfig;
   theme?: KeyboardTheme;
-  onKeyPress: (key: string) => void;
+  onKeyPress?: (key: string) => void;
+  onTriggerPress?: (trigger: string) => void;
 }
 
 interface State {
@@ -114,6 +116,7 @@ class EasyKeyboard extends PureComponent<Props, State> {
               cellSize={sizes.cellSize}
               cellFontSize={sizes.cellFontSize}
               onKeyPress={this.props.onKeyPress}
+              onTriggerPress={this.props.onTriggerPress}
             />
           ))}
         </View>

@@ -10,7 +10,7 @@ import {
 import type {KeyConfig} from './keyboard';
 
 interface Props {
-  onPress: (value: string) => void;
+  onPress?: (value: string) => void;
   config: KeyConfig;
   baseSize?: number;
   margin?: number;
@@ -21,7 +21,7 @@ interface Props {
 
 const Cell = ({onPress, config, ...props}: Props) => {
   const handleCellPress = useCallback(() => {
-    onPress(config.value);
+    onPress?.(config.value);
   }, [onPress, config.value]);
 
   const margin = props.margin !== undefined ? props.margin / 2 : 0;

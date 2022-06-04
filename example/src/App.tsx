@@ -17,7 +17,17 @@ const myLayout: KeyboardConfig = {
     default: [
       ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
       ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-      ['{shift}{1.5}', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '{del}{1.5}'],
+      [
+        '{shift}{1.5}',
+        'z',
+        'x',
+        'c',
+        'v',
+        'b',
+        'n',
+        'm',
+        {isTrigger: true, value: '{del}', size: 1.5},
+      ],
       ['{numeric}{2.5}', ' {5}', '{return}{2.5}'],
     ],
   },
@@ -34,12 +44,21 @@ const myTheme: KeyboardTheme = {
 
 export default function App() {
   const onKeyPress = (key: string) => {
-    console.log('Key pressed: ', key);
+    console.log(`Key pressed: ${key}`);
+  };
+
+  const onTriggerPress = (trigger: string) => {
+    console.log(`Trigger pressed: ${trigger}`);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <EasyKeyboard onKeyPress={onKeyPress} config={myLayout} theme={myTheme} />
+      <EasyKeyboard
+        theme={myTheme}
+        config={myLayout}
+        onKeyPress={onKeyPress}
+        onTriggerPress={onTriggerPress}
+      />
     </SafeAreaView>
   );
 }

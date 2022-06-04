@@ -5,7 +5,8 @@ import type {KeyboardTheme, KeyConfig} from './keyboard';
 
 interface Props {
   row: KeyConfig[];
-  onKeyPress: (key: string) => void;
+  onKeyPress?: (key: string) => void;
+  onTriggerPress?: (trigger: string) => void;
   triggers?: Record<string, string>;
   cellSize?: number;
   cellMargin?: number;
@@ -20,7 +21,7 @@ const Row = (props: Props) => {
         <Cell
           config={cell}
           baseSize={props.cellSize}
-          onPress={props.onKeyPress}
+          onPress={cell.isTrigger ? props.onTriggerPress : props.onKeyPress}
           key={cell.value + i}
           keyStyle={props.theme?.keyStyle}
           textStyle={props.theme?.textStyle}
