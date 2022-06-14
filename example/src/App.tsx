@@ -11,6 +11,7 @@ const myLayout: KeyboardConfig = {
       '{numeric}': '123',
       '{return}': 'return',
       '{del}': '\u21E6',
+      '{space}': '',
     },
   },
   layouts: {
@@ -28,7 +29,7 @@ const myLayout: KeyboardConfig = {
         'm',
         {isTrigger: true, value: '{del}', size: 1.5},
       ],
-      ['{numeric}{2.5}', ' {5}', '{return}{2.5}'],
+      ['{numeric}{2.5}', '{space}{5}', '{return}{2.5}'],
     ],
   },
 };
@@ -36,6 +37,7 @@ const myLayout: KeyboardConfig = {
 const myTheme: KeyboardTheme = {
   containerStyle: {
     alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   rowStyle: {},
   keyStyle: {},

@@ -23,6 +23,7 @@ export const createKeyConfigFromString = (
     ...constants.DEFAULT_KEY_CONFIG,
     value,
     size,
+    isTrigger: constants.triggerRegex.test(value),
     display: getDisplayNameFromConfig(config, value),
   };
 };
