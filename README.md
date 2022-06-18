@@ -107,3 +107,14 @@ const myCustomLayout: KeyboardConfig = {
 
 <EasyKeyboard config={myCustomLayout} />;
 ```
+
+## KeyConfig
+
+| Property  | Type      | Description                                                                                                                                  |
+| --------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| value     | string    | The value that will be returned when the key is pressed (Required)                                                                           |
+| size      | number    | The size of the key. 2 = double the size of a normal key, 0.5 = half the size of a normal key. Only affects the width of the key (Default 1) |
+| isTrigger | boolean   | If the key should trigger the onTriggerPressed callback (Default false)                                                                      |
+| display   | string    | The text to be displayed on the key. If undefined value property is used instead                                                             |
+| keyStyle  | ViewStyle | Style for the keys TouchableOpacity component                                                                                                |
+| textStyle | TextStyle | Style for the keys Text component                                                                                                            |
