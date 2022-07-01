@@ -78,7 +78,7 @@ const myCustomLayout: KeyboardConfig = {
 
 To change the size of a key you can either use the `size` property of the `KeyConfig` object or end your string with a pair of curly brackets containing the desired size.
 
-The `8` key in these examples will be the width of 3 default size keys
+The "8" key in these examples will be the width of 3 default size keys
 
 With strings
 
@@ -108,6 +108,51 @@ const myCustomLayout: KeyboardConfig = {
 <EasyKeyboard config={myCustomLayout} />;
 ```
 
+## How do I change the text on a key?
+
+To change the text displayed on a key you can either configure the `displayOptions` in the `KeyboardConfig`, (this will affect all keys in every layout) or you can use the `display` option in the `KeyConfig` object.
+
+With displayOptions
+
+```js
+import EasyKeyboard, {KeyboardConfig} from 'react-native-easy-keyboard';
+
+const myCustomLayout: KeyboardConfig = {
+  layouts: {
+    default: [['7', '8', '9', '{del}']],
+  },
+  displayOptions: {
+    display: {
+      '{del}': '<- Delete',
+      '9': 'Nine',
+    },
+  },
+};
+
+<EasyKeyboard config={myCustomLayout} />;
+```
+
+With `KeyConfig`
+
+```js
+import EasyKeyboard, {KeyboardConfig} from 'react-native-easy-keyboard';
+
+const myCustomLayout: KeyboardConfig = {
+  layouts: {
+    default: [
+      [
+        '7',
+        '8',
+        {value: '9', display: 'Nine'},
+        {value: '{del}', display: '<- Delete'},
+      ],
+    ],
+  },
+};
+
+<EasyKeyboard config={myCustomLayout} />;
+```
+
 ## KeyConfig
 
 | Property  | Type      | Description                                                                                                                                  |
@@ -118,3 +163,17 @@ const myCustomLayout: KeyboardConfig = {
 | display   | string    | The text to be displayed on the key. If undefined value property is used instead                                                             |
 | keyStyle  | ViewStyle | Style for the keys TouchableOpacity component                                                                                                |
 | textStyle | TextStyle | Style for the keys Text component                                                                                                            |
+
+## KeyboardConfig
+
+## EasyKeyboard Component
+
+### Methods
+
+| Method name       | Arguments          | Notes                                                                 |
+| ----------------- | ------------------ | --------------------------------------------------------------------- |
+| setKeyboardLayout | layoutName: string | Changes the layout of the keyboard if the layout exists in the config |
+
+### Props
+
+### Events
