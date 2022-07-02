@@ -176,4 +176,14 @@ const myCustomLayout: KeyboardConfig = {
 
 ### Props
 
+| Prop   | Type           | Required | Note                                                           |
+| ------ | -------------- | -------- | -------------------------------------------------------------- |
+| config | KeyboardConfig | true     | The configuration for the keyboard, containing all the layouts |
+| theme  | KeyboardTheme  | false    |                                                                |
+
 ### Events
+
+| Event Name     | Returns         | Notes                                                 |
+| -------------- | --------------- | ----------------------------------------------------- |
+| onKeyPress     | key: string     | Callback that is called when a key is pressed         |
+| onTriggerPress | trigger: string | Callback that is called when a trigger key is pressed |
