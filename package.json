@@ -31,7 +31,10 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "Keyboard",
+    "Virtual keyboard",
+    "Easy keyboard"
   ],
   "repository": "https://github.com/Mikael-Aberg/react-native-easy-keyboard",
   "author": "Mikael Åberg <mikael.aberg@me.com> (https://github.com/Mikael-Aberg)",
