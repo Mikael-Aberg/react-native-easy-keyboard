@@ -108,6 +108,24 @@ const myCustomLayout: KeyboardConfig = {
 <EasyKeyboard config={myCustomLayout} />;
 ```
 
+## How do I change the style of my keyboard?
+
+```js
+import EasyKeyboard, {KeyboardTheme} from 'react-native-easy-keyboard';
+
+const myTheme: KeyboardTheme = {
+  containerStyle: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  rowStyle: {},
+  keyStyle: {},
+  textStyle: {},
+};
+
+<EasyKeyboard theme={myTheme} />;
+```
+
 ## How do I change the text on a key?
 
 To change the text displayed on a key you can either configure the `displayOptions` in the `KeyboardConfig`, (this will affect all keys in every layout) or you can use the `display` option in the `KeyConfig` object.
@@ -153,9 +171,18 @@ const myCustomLayout: KeyboardConfig = {
 <EasyKeyboard config={myCustomLayout} />;
 ```
 
+## KeyboardTheme
+
+| Property       | Type      | Notes                                                      |
+| -------------- | --------- | ---------------------------------------------------------- |
+| keyStyle       | ViewStyle | The style applied to TouchableOpacity for each key         |
+| textStyle      | TextStyle | The style applied to the Text for each key                 |
+| rowStyle       | ViewStyle | The style applied to to View containing each row           |
+| containerStyle | ViewStyle | The style applied to the main View containing the keyboard |
+
 ## KeyConfig
 
-| Property  | Type      | Description                                                                                                                                  |
+| Property  | Type      | Notes                                                                                                                                        |
 | --------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | value     | string    | The value that will be returned when the key is pressed (Required)                                                                           |
 | size      | number    | The size of the key. 2 = double the size of a normal key, 0.5 = half the size of a normal key. Only affects the width of the key (Default 1) |
