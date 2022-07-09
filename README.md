@@ -191,8 +191,6 @@ const myCustomLayout: KeyboardConfig = {
 | keyStyle  | ViewStyle | Style for the keys TouchableOpacity component                                                                                                |
 | textStyle | TextStyle | Style for the keys Text component                                                                                                            |
 
-## KeyboardConfig
-
 ## EasyKeyboard Component
 
 ### Methods
