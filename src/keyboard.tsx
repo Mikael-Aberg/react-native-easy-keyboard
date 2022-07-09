@@ -63,9 +63,9 @@ class EasyKeyboard extends PureComponent<Props, State> {
     fontMeasure: {height: 1, width: 1},
   };
 
-  setLayout = (layout: string) => {
-    if (this.props.config.layouts[layout]) {
-      this.setState({layout});
+  setKeyboardLayout = (layoutName: string) => {
+    if (this.props.config.layouts[layoutName]) {
+      this.setState({layout: layoutName});
     }
   };
 
