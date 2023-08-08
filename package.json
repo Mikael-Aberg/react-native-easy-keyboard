@@ -70,7 +70,7 @@
     "babel-jest": "28.1.2",
     "eslint": "8.17.0",
     "jest": "28.1.2",
-    "metro-react-native-babel-preset": "0.71.1",
+    "metro-react-native-babel-preset": "0.77.0",
     "react-test-renderer": "17.0.2",
     "typescript": "4.7.3"
   },
