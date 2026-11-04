@@ -2144,10 +2144,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-test-renderer@17.0.2":
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-17.0.2.tgz#5f800a39b12ac8d2a2149e7e1885215bcf4edbbf"
-  integrity sha512-+F1KONQTBHDBBhbHuT2GNydeMpPuviduXIVJRB7Y4nma4NR5DrTJfMMZ+jbhEHbpwL+Uqhs1WXh4KHiyrtYTPg==
+"@types/react-test-renderer@17.0.10":
+  version "17.0.10"
+  resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-17.0.10.tgz#4327fd873ec40332fa4cf901bc925ffdc7e93c0d"
+  integrity sha512-806egdSF6UPpsKD/RpzIEwJ2LaT/WAYpHb3gwfSvmHiI4hh7b51xJ4pXnF+MnsoQsCuewOQbuO9IoWvaigg6jQ==
   dependencies:
     "@types/react" "^17"
 
